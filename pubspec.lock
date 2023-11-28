@@ -9,10 +9,10 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
-  bloc:
+  logic.logic.bloc.cubit.logic.bloc:
     dependency: "direct main"
     description:
-      name: bloc
+      name: logic.logic.bloc.cubit.logic.bloc
       sha256: "3820f15f502372d979121de1f6b97bfcf1630ebff8fe1d52fb2b0bfa49be5b49"
       url: "https://pub.dev"
     source: hosted
