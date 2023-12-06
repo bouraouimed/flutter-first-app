@@ -23,10 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
       listener: (ctx, state) {
         if (state is InternetConnected &&
             state.connectionType == ConnectionType.Wifi) {
-          BlocProvider.of<CounterCubit>(context).increment();
+          context.read<CounterCubit>().increment();
         } else if (state is InternetConnected &&
             state.connectionType == ConnectionType.Mobile) {
-          BlocProvider.of<CounterCubit>(context).decrement();
+          context.read<CounterCubit>().decrement();
         }
       },
       child: Scaffold(
@@ -74,19 +74,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+              Builder(builder: (context) {
+                final counterState = context.watch<CounterCubit>().state;
+                final internetState = context.watch<InternetCubit>().state;
+                if (internetState is InternetConnected &&
+                    internetState.connectionType == ConnectionType.Wifi) {
+                  return Text(
+                      'Counter: ${counterState.counterValue}Internet: WIFI');
+                } else if (internetState is InternetConnected &&
+                    internetState.connectionType == ConnectionType.Mobile) {
+                  return Text(
+                      'Counter: ${counterState.counterValue}Internet: MOBILE');
+                } else {
+                  return Text(
+                      'Counter: ${counterState.counterValue}Internet: DISCONNECTED');
+                }
+              }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FloatingActionButton(
                     onPressed: () {
-                      BlocProvider.of<CounterCubit>(context).increment();
+                      context.read<CounterCubit>().increment();
                     },
                     tooltip: 'Increment',
                     child: const Icon(Icons.add),
                   ),
                   FloatingActionButton(
                     onPressed: () {
-                      BlocProvider.of<CounterCubit>(context).decrement();
+                      context.read<CounterCubit>().decrement();
                     },
                     tooltip: 'Decrement',
                     child: const Icon(Icons.remove),
